@@ -1,0 +1,5 @@
+---
+name: hl7-messaging-jgroups - SOAP
+version: 1.0.0-SNAPSHOT
+description: HL7Messaging - JGroups clustering - SOAP
+icon: img/icons/camel.svg
