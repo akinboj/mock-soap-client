@@ -1,0 +1,8 @@
+# Maven build
+mvn clean install -DskipTests
+
+# Build docker image
+docker build --rm -t interface-hl7jgroups-soapclient:1.0.0-snapshot --file Dockerfile .
+
+# Deploy to microservice
+helm upgrade interface-hl7jgroups-soapclient-site-a --install --namespace site-a --set serviceName=interface-hl7jgroups-soapclient,basePort=30450,imageTag=1.0.0-snapshot,numOfPods=1 helm

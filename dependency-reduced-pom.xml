@@ -11,6 +11,15 @@
   <name>HL7 SOAP Client</name>
   <description>Send HL7 Messages :: SOAP Client</description>
   <build>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <includes>
+          <include>**/*.xsd</include>
+          <include>**/*.xml</include>
+        </includes>
+      </resource>
+    </resources>
     <plugins>
       <plugin>
         <artifactId>maven-shade-plugin</artifactId>
@@ -23,7 +32,7 @@
             <configuration>
               <transformers>
                 <transformer>
-                  <mainClass>net.development.hl7soapClient.SendHL7Message</mainClass>
+                  <mainClass>net.development.hl7soapClient.HL7StartInterface</mainClass>
                 </transformer>
               </transformers>
             </configuration>
