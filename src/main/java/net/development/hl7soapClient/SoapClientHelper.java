@@ -33,7 +33,7 @@ public class SoapClientHelper {
         // Log the SOAP request message
         ByteArrayOutputStream soapRequestStream = new ByteArrayOutputStream();
         soapMessage.writeTo(soapRequestStream);
-        logger.info("<=*=* Outgoing HL7 SOAP Request:\n {}", new String(soapRequestStream.toByteArray()));
+        logger.info("<=*=* Outgoing HL7 SOAP Request:\r {}", new String(soapRequestStream.toByteArray()));
 
         // Set the Content-Type header to application/soap+xml
         MimeHeaders headers = soapMessage.getMimeHeaders();
@@ -59,11 +59,11 @@ public class SoapClientHelper {
                 "<soapenv:Header/>\n" +
                 "<soapenv:Body>\n" +
                 "<hl7:receiveHL7Message>\n" +
-                "<arg0>\n" +
+                "<NotifyPasEvent>\n" +
                 "<![CDATA[\n" + 
-                hl7Message + "\n" + 
+                hl7Message + "\r" + 
                 "]]>\n" +
-                "</arg0>\n" +
+                "</NotifyPasEvent>\n" +
                 "</hl7:receiveHL7Message>\n" +
                 "</soapenv:Body>\n" +
                 "</soapenv:Envelope>\r";

@@ -9,9 +9,14 @@ import org.jgroups.View;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 public class HL7MessageReceiver implements Receiver {
     private static final Logger logger = LoggerFactory.getLogger(HL7MessageReceiver.class);
     private Address localAddress;
+    private Set<Address> previousMembers = new HashSet<>();
 
     // No-argument constructor
     public HL7MessageReceiver() {
@@ -59,6 +64,24 @@ public class HL7MessageReceiver implements Receiver {
 
     @Override
     public void viewAccepted(View view) {
-        logger.info("*** Received view: {}", view);
+        List<Address> members = view.getMembers();
+        if (members.isEmpty()) {
+            logger.info("No members in the cluster.");
+        } else {
+            for (Address member : members) {
+                if (!member.equals(localAddress) && !previousMembers.contains(member)) {
+                    logger.info(">>> Member: [{}] JOINED the cluster", member);
+                }
+            }
+            for (Address member : previousMembers) {
+                if (!members.contains(member)) {
+                    logger.info("<<< Member: [{}] LEFT the cluster", member);
+                }
+            }
+            previousMembers.clear();
+            previousMembers.addAll(members);
+            logger.info("*** Received view: {}", view);
+        }
     }
+
 }
